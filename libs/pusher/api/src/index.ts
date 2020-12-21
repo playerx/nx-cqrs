@@ -1,3 +1,4 @@
-export * from './lib/pusher.command'
-export * from './lib/pusherClient.action'
+export * from './lib/pusherClient'
 export * from './lib/pusherClient.message'
+export * from './lib/pusherServer.command'
+export * from './lib/pusherServer.event'

@@ -26,140 +26,6 @@
         }
       }
     },
-    "pusher-socketio-core": {
-      "root": "libs/pusher/socketio/core",
-      "sourceRoot": "libs/pusher/socketio/core/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/pusher/socketio/core/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/pusher/socketio/core"
-          ],
-          "options": {
-            "jestConfig": "libs/pusher/socketio/core/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "user-core": {
-      "root": "libs/user/core",
-      "sourceRoot": "libs/user/core/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/user/core/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/user/core"
-          ],
-          "options": {
-            "jestConfig": "libs/user/core/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "user-ui": {
-      "root": "libs/user/ui",
-      "sourceRoot": "libs/user/ui/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/user/ui/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/user/ui"
-          ],
-          "options": {
-            "jestConfig": "libs/user/ui/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "pusher-api-gateway-server": {
-      "root": "apps/pusher/api-gateway-server",
-      "sourceRoot": "apps/pusher/api-gateway-server/src",
-      "projectType": "application",
-      "prefix": "pusher-api-gateway-server",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/apps/pusher/api-gateway-server",
-            "main": "apps/pusher/api-gateway-server/src/main.ts",
-            "tsConfig": "apps/pusher/api-gateway-server/tsconfig.app.json",
-            "assets": [
-              "apps/pusher/api-gateway-server/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/pusher/api-gateway-server/src/environments/environment.ts",
-                  "with": "apps/pusher/api-gateway-server/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "executor": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "pusher-api-gateway-server:build"
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/pusher/api-gateway-server/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/pusher/api-gateway-server"
-          ],
-          "options": {
-            "jestConfig": "apps/pusher/api-gateway-server/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "pusher-socketio-server": {
       "root": "apps/pusher/socketio-server",
       "sourceRoot": "apps/pusher/socketio-server/src",
@@ -303,31 +169,6 @@
         }
       }
     },
-    "pusher-shared-client": {
-      "root": "libs/pusher/shared/client",
-      "sourceRoot": "libs/pusher/shared/client/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/pusher/shared/client/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/pusher/shared/client"
-          ],
-          "options": {
-            "jestConfig": "libs/pusher/shared/client/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "pusher-api": {
       "root": "libs/pusher/api",
       "sourceRoot": "libs/pusher/api/src",
@@ -353,31 +194,6 @@
         }
       }
     },
-    "pusher-aws-core": {
-      "root": "libs/pusher/aws/core",
-      "sourceRoot": "libs/pusher/aws/core/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/pusher/aws/core/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/pusher/aws/core"
-          ],
-          "options": {
-            "jestConfig": "libs/pusher/aws/core/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "pusher-aws-client": {
       "root": "libs/pusher/aws/client",
       "sourceRoot": "libs/pusher/aws/client/src",
@@ -398,56 +214,6 @@
           ],
           "options": {
             "jestConfig": "libs/pusher/aws/client/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "user-api": {
-      "root": "libs/user/api",
-      "sourceRoot": "libs/user/api/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/user/api/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/user/api"
-          ],
-          "options": {
-            "jestConfig": "libs/user/api/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "user-shared": {
-      "root": "libs/user/shared",
-      "sourceRoot": "libs/user/shared/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/user/shared/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/user/shared"
-          ],
-          "options": {
-            "jestConfig": "libs/user/shared/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -528,26 +294,110 @@
         }
       }
     },
-    "joker-shared": {
-      "root": "libs/joker/shared",
-      "sourceRoot": "libs/joker/shared/src",
-      "projectType": "library",
+    "pusher-aws-server": {
+      "root": "apps/pusher/aws-server",
+      "sourceRoot": "apps/pusher/aws-server/src",
+      "projectType": "application",
+      "prefix": "pusher-api-gateway-server",
       "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/pusher/aws-server",
+            "main": "apps/pusher/aws-server/src/main.ts",
+            "tsConfig": "apps/pusher/aws-server/tsconfig.app.json",
+            "assets": [
+              "apps/pusher/aws-server/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/pusher/aws-server/src/environments/environment.ts",
+                  "with": "apps/pusher/aws-server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "pusher-aws-server:build"
+          }
+        },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/joker/shared/**/*.ts"
+              "apps/pusher/aws-server/**/*.ts"
             ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/libs/joker/shared"
+            "coverage/apps/pusher/aws-server"
           ],
           "options": {
-            "jestConfig": "libs/joker/shared/jest.config.js",
+            "jestConfig": "apps/pusher/aws-server/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "server-api": {
+      "root": "libs/server/api",
+      "sourceRoot": "libs/server/api/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/server/api/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/server/api"
+          ],
+          "options": {
+            "jestConfig": "libs/server/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "server-core": {
+      "root": "libs/server/core",
+      "sourceRoot": "libs/server/core/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/server/core/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/server/core"
+          ],
+          "options": {
+            "jestConfig": "libs/server/core/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -557,5 +407,5 @@
   "cli": {
     "defaultCollection": "@nrwl/node"
   },
-  "defaultProject": "pusher-api-gateway-server"
+  "defaultProject": "pusher-aws-server"
 }

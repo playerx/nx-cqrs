@@ -1,12 +1,18 @@
-export type Props<T extends (...args: any) => any> = Parameters<T>[0]
+export interface MessageMetadata {
+  fromAppId: string
+  userId?: string
+  userRoles?: string[]
+  socketId?: string
+  userActiveSocketsCount: number
+  [key: string]: string[] | string | number | boolean
+}
 
 export type Message<T extends Message<T>> = {
   type: T['type']
 }
-// export type WithoutPromise<T> = T extends PromiseLike<infer U>
-//   ? WithoutPromise<U>
-//   : T
 
-// export type Result<T extends (...args: any) => any> = WithoutPromise<
-//   ReturnType<T>
-// >
+export interface ReceivedMessage<TPayload> {
+  payload: TPayload
+  metadata: MessageMetadata
+  ack(): Promise<void>
+}

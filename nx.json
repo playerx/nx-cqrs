@@ -26,18 +26,6 @@
     "pusher-socketio-client": {
       "tags": []
     },
-    "pusher-socketio-core": {
-      "tags": []
-    },
-    "user-core": {
-      "tags": []
-    },
-    "user-ui": {
-      "tags": []
-    },
-    "pusher-api-gateway-server": {
-      "tags": []
-    },
     "pusher-socketio-server": {
       "tags": []
     },
@@ -47,22 +35,10 @@
     "shared": {
       "tags": []
     },
-    "pusher-shared-client": {
-      "tags": []
-    },
     "pusher-api": {
       "tags": []
     },
-    "pusher-aws-core": {
-      "tags": []
-    },
     "pusher-aws-client": {
-      "tags": []
-    },
-    "user-api": {
-      "tags": []
-    },
-    "user-shared": {
       "tags": []
     },
     "joker-api": {
@@ -74,7 +50,13 @@
     "joker-core": {
       "tags": []
     },
-    "joker-shared": {
+    "pusher-aws-server": {
+      "tags": []
+    },
+    "server-api": {
+      "tags": []
+    },
+    "server-core": {
       "tags": []
     }
   }

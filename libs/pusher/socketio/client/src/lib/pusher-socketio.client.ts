@@ -1,15 +1,14 @@
 import {
   PusherClient,
-  PusherClientInputMessage,
-} from '@nx-cqrs/pusher/shared/client'
+  PusherClientMessage,
+} from '@nx-cqrs/pusher/api'
 import { Subject } from 'rxjs'
 import { Manager, Socket } from 'socket.io-client'
 
-export class PusherSocketIOClient<
-  In extends PusherClientInputMessage,
-  Out
-> implements PusherClient<In, Out> {
-  message$ = new Subject<In>()
+export class PusherSocketIOClient<TInMessage, TOutMessage>
+  implements PusherClient<TInMessage, TOutMessage> {
+  pusher$ = new Subject<PusherClientMessage>()
+  message$ = new Subject<TInMessage>()
 
   private manager: Manager
   private socket: Socket
@@ -20,8 +19,6 @@ export class PusherSocketIOClient<
     getQueryParams: () => Object
     handleError: (err: Error, msg: any) => void
   }) {
-    const input$ = new Subject<In>()
-
     this.manager = new Manager(options.url, {
       autoConnect: false, // important to be 'true' for namespaces to work properly
       reconnection: true,
@@ -36,23 +33,23 @@ export class PusherSocketIOClient<
     const socket = this.manager.socket(options.appId)
 
     socket.on('connect', (...args: any) => {
-      input$.next(<any>(<PusherClientInputMessage>{
+      this.pusher$.next({
         type: 'Pusher.Client.Connected',
-      }))
+      })
     })
 
     socket.on('reconnect', () => {
-      input$.next(<any>(<PusherClientInputMessage>{
+      this.pusher$.next({
         type: 'Pusher.Client.Connected',
-      }))
+      })
     })
 
     socket.on('connect_error', (err: Error) => {
-      input$.next(<any>(<PusherClientInputMessage>{
+      this.pusher$.next({
         type: 'Pusher.Client.Error',
         reasonCode: 'CONNECT_ERROR',
         error: err,
-      }))
+      })
     })
 
     // socket.on('reconnect_error', (err: Error) => {
@@ -63,10 +60,10 @@ export class PusherSocketIOClient<
     // })
 
     socket.on('connect_timeout', () => {
-      input$.next(<any>(<PusherClientInputMessage>{
+      this.pusher$.next({
         type: 'Pusher.Client.Error',
         reasonCode: 'CONNECT_TIMEOUT',
-      }))
+      })
     })
 
     socket.on('message', (msg: any) => {
@@ -78,7 +75,7 @@ export class PusherSocketIOClient<
         return
       }
 
-      input$.next(<any>(<PusherClientInputMessage>msg))
+      this.message$.next(msg)
     })
 
     // update token on reconnect attempt
@@ -88,28 +85,28 @@ export class PusherSocketIOClient<
         manager.opts.query = options.getQueryParams()
       }
 
-      input$.next(<any>(<PusherClientInputMessage>{
+      this.pusher$.next({
         type: 'Pusher.Client.ReconnectAttempted',
-      }))
+      })
     })
 
     socket.on('reconnecting', (attempt: number) => {
-      input$.next(<any>(<PusherClientInputMessage>{
+      this.pusher$.next({
         type: 'Pusher.Client.Reconnecting',
         attempt,
-      }))
+      })
     })
 
     socket.on('disconnect', () => {
-      input$.next(<any>(<PusherClientInputMessage>{
+      this.pusher$.next({
         type: 'Pusher.Client.Disconnected',
-      }))
+      })
     })
 
     this.socket = socket
   }
 
-  async publish(message: Out) {
+  async send(message: TOutMessage) {
     this.socket.send(message)
   }
 

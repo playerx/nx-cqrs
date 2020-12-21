@@ -1,4 +1,5 @@
-export * from './lib/cqrs/message.bus'
+export * from './lib/bus/message.bus'
 export * from './lib/getUserByJwtToken'
-export * from './lib/notImplemented.error'
+export * from './lib/queue/rabbitmq.queue'
+export * from './lib/queue/types'
 export * from './lib/types'
