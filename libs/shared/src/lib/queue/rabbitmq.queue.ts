@@ -5,48 +5,36 @@ import { filter } from 'rxjs/operators'
 import { PublishProps, Queue, QueueItem } from './types'
 
 interface Options {
-  name: string
+  moduleName: string
   amqpConnectionString: string
   publishExchangeName: string
   newId: () => string
-  listenRoutePatterns: string[]
 }
 
 export class RabbitMQQueue<TMessage> implements Queue {
   message$: Observable<QueueItem<TMessage>>
   unsubscribe$ = new Subject()
-
-  get name() {
-    return this.subscribeQueueName
-  }
+  moduleName: string
 
   private channel: amqp.ChannelWrapper
   private internal$ = new Subject<QueueItem<TMessage>>()
   private internalResponse$ = new Subject<QueueItem<TMessage>>()
   private rpcResponseQueueName: string
-  private subscribeQueueName: string
 
   constructor(private options: Options) {
-    const {
-      name,
-      newId,
-      listenRoutePatterns: listenPatterns,
-    } = this.options
+    const { moduleName, newId } = this.options
 
-    this.subscribeQueueName = name
-    this.rpcResponseQueueName = `${name}Response-${newId()}`
+    this.moduleName = moduleName
+    this.rpcResponseQueueName = `${moduleName}Response-${newId()}`
 
     this.message$ = this.internal$
 
-    this.channel = this.init(
-      listenPatterns.map(x => x + '#'),
-      this.rpcResponseQueueName,
-    )
+    this.channel = this.init(this.rpcResponseQueueName)
 
     this.setupSubscription()
   }
 
-  private init(listenPatterns: string[], responseQueueName) {
+  private init(responseQueueName) {
     const { amqpConnectionString, publishExchangeName } = this.options
 
     const connection = amqp.connect([amqpConnectionString])
@@ -60,16 +48,12 @@ export class RabbitMQQueue<TMessage> implements Queue {
           }),
 
           // Queues
-          c.assertQueue(this.subscribeQueueName, { durable: true }),
+          c.assertQueue(this.moduleName, { durable: true }),
 
-          // Bindings
-          ...listenPatterns.map(patern =>
-            c.bindQueue(
-              this.subscribeQueueName,
-              publishExchangeName,
-              patern,
-            ),
-          ),
+          // // Bindings
+          // ...listenPatterns.map(patern =>
+          //   c.bindQueue(this.moduleName, publishExchangeName, patern),
+          // ),
 
           // Response queue
           c.assertQueue(responseQueueName, {
@@ -84,7 +68,7 @@ export class RabbitMQQueue<TMessage> implements Queue {
 
   private setupSubscription() {
     const setup = (x: ConfirmChannel) => {
-      x.consume(this.subscribeQueueName, msg => {
+      x.consume(this.moduleName, msg => {
         if (!msg) {
           return
         }
@@ -99,7 +83,7 @@ export class RabbitMQQueue<TMessage> implements Queue {
         this.internal$.next({
           message,
           route: msg.fields.routingKey,
-          metadata: msg.properties.headers,
+          metadata: <any>msg.properties.headers,
           correlationId,
           replyTo,
           complete: (isSuccess = true) => {
@@ -139,7 +123,7 @@ export class RabbitMQQueue<TMessage> implements Queue {
         this.internalResponse$.next({
           message,
           route: msg.fields.routingKey,
-          metadata: msg.properties.headers,
+          metadata: <any>msg.properties.headers,
           correlationId,
           complete: () => null,
           sendReply: () => Promise.resolve(),
@@ -197,6 +181,24 @@ export class RabbitMQQueue<TMessage> implements Queue {
     )
 
     return result
+  }
+
+  listenPatterns(patterns: string[]) {
+    if (!patterns?.length) {
+      return
+    }
+
+    const rabbitMqPatterns = patterns.map(x => x + '#')
+
+    this.channel.addSetup((c: ConfirmChannel) => {
+      rabbitMqPatterns.map(patern =>
+        c.bindQueue(
+          this.moduleName,
+          this.options.publishExchangeName,
+          patern,
+        ),
+      )
+    })
   }
 
   dispose() {

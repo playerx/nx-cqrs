@@ -3,7 +3,6 @@ export interface MessageMetadata {
   userId?: string
   userRoles?: string[]
   socketId?: string
-  userActiveSocketsCount: number
   [key: string]: string[] | string | number | boolean
 }
 

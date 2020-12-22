@@ -29,9 +29,6 @@
     "pusher-socketio-server": {
       "tags": []
     },
-    "user-server": {
-      "tags": []
-    },
     "shared": {
       "tags": []
     },
@@ -57,6 +54,12 @@
       "tags": []
     },
     "server-core": {
+      "tags": []
+    },
+    "server": {
+      "tags": []
+    },
+    "joker-server": {
       "tags": []
     }
   }

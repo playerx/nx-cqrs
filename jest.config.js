@@ -23,5 +23,7 @@ module.exports = {
     '<rootDir>/libs/joker/shared',
     '<rootDir>/libs/server/api',
     '<rootDir>/libs/server/core',
+    '<rootDir>/apps/server',
+    '<rootDir>/apps/joker/server',
   ],
 }

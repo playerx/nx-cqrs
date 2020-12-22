@@ -1,5 +1,9 @@
 import { PusherServerEvent } from '@nx-cqrs/pusher/api'
-import { getUserByJwtToken, MessageMetadata } from '@nx-cqrs/shared'
+import {
+  getUserByJwtToken,
+  MessageMetadata,
+  PublishMessageType,
+} from '@nx-cqrs/shared'
 import { Server } from 'http'
 import { RedisClient } from 'redis'
 import * as socketIO from 'socket.io'
@@ -11,6 +15,7 @@ interface Props {
   httpServer: Server
   origins?: string | string[] | '*'
   publishMessage: (
+    type: PublishMessageType,
     message: any,
     metadata: MessageMetadata,
   ) => Promise<void>

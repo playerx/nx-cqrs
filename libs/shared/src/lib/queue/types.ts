@@ -2,12 +2,14 @@ import { Observable } from 'rxjs'
 import { MessageMetadata } from '../types'
 
 export interface Queue {
-  name: string
+  moduleName: string
 
   message$: Observable<QueueItem<any>>
   unsubscribe$: Observable<any>
 
   publish<TResult>(props: PublishProps<any>): Promise<TResult>
+
+  listenPatterns(patterns: string[]): void
 
   dispose(): void
 }

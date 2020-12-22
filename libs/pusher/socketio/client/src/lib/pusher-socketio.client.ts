@@ -34,19 +34,19 @@ export class PusherSocketIOClient<TInMessage, TOutMessage>
 
     socket.on('connect', (...args: any) => {
       this.pusher$.next({
-        type: 'Pusher.Client.Connected',
+        type: 'Client.Pusher.Connected',
       })
     })
 
     socket.on('reconnect', () => {
       this.pusher$.next({
-        type: 'Pusher.Client.Connected',
+        type: 'Client.Pusher.Connected',
       })
     })
 
     socket.on('connect_error', (err: Error) => {
       this.pusher$.next({
-        type: 'Pusher.Client.Error',
+        type: 'Client.Pusher.Error',
         reasonCode: 'CONNECT_ERROR',
         error: err,
       })
@@ -61,7 +61,7 @@ export class PusherSocketIOClient<TInMessage, TOutMessage>
 
     socket.on('connect_timeout', () => {
       this.pusher$.next({
-        type: 'Pusher.Client.Error',
+        type: 'Client.Pusher.Error',
         reasonCode: 'CONNECT_TIMEOUT',
       })
     })
@@ -71,9 +71,9 @@ export class PusherSocketIOClient<TInMessage, TOutMessage>
         return
       }
 
-      if (msg?.type && msg.type.startsWith('Pusher.Client.')) {
-        return
-      }
+      // if (msg?.type && msg.type.startsWith('Pusher.Client.')) {
+      //   return
+      // }
 
       this.message$.next(msg)
     })
@@ -86,20 +86,20 @@ export class PusherSocketIOClient<TInMessage, TOutMessage>
       }
 
       this.pusher$.next({
-        type: 'Pusher.Client.ReconnectAttempted',
+        type: 'Client.Pusher.ReconnectAttempted',
       })
     })
 
     socket.on('reconnecting', (attempt: number) => {
       this.pusher$.next({
-        type: 'Pusher.Client.Reconnecting',
+        type: 'Client.Pusher.Reconnecting',
         attempt,
       })
     })
 
     socket.on('disconnect', () => {
       this.pusher$.next({
-        type: 'Pusher.Client.Disconnected',
+        type: 'Client.Pusher.Disconnected',
       })
     })
 
